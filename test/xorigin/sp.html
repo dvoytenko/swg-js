@@ -27,8 +27,8 @@ function iframeReady(origin) {
           'N/A');
   report('referrer', document.referrer);
   setTimeout(function() {
-    console.log('post a message');
-    parent.postMessage({action: 'other', from: location.hash}, origin);
+    console.log('post a message to ', origin, ' with transfer');
+    parent.postMessage({action: 'other', from: location.hash}, origin, undefined);
   }, 300);
 }
 
