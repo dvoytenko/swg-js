@@ -26,6 +26,10 @@ function iframeReady(origin) {
           stringList(location.ancestorOrigins) :
           'N/A');
   report('referrer', document.referrer);
+  setTimeout(function() {
+    console.log('post a message');
+    parent.postMessage({action: 'other', from: location.hash}, origin);
+  }, 300);
 }
 
 report('self.origin', window.origin || window.location.origin);
@@ -33,9 +37,13 @@ window.addEventListener('message', function(e) {
   if (e.data && e.data.action == 'ready' &&
       (e.source == parent || e.source == top)) {
     iframeReady(e.origin);
+  } else {
+    report('MSG', JSON.stringify(e.data));
   }
 });
-parent.postMessage({action: 'init'}, '*');
+setTimeout(function() {
+  parent.postMessage({action: 'init'}, '*');
+}, 300);
 </script>
 </body>
 </html>
